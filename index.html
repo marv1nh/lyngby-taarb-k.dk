@@ -137,9 +137,7 @@
 
     // Define folder structure
     const folders = {
-      "writeups": files.filter(f => f.path.startsWith("writeups") && !f.path.includes("Regionals")),
-      "writeups/Regionals": files.filter(f => f.path.startsWith("writeups/Regionals")),
-      "thm": files.filter(f => f.path.startsWith("thm"))
+      "writeups": files.filter(f => f.path.startsWith("writeups") && !f.path.includes("Regionals"))
     };
 
     // Populate folder list
