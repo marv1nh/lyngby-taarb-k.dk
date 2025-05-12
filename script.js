@@ -1,8 +1,7 @@
 const files = [
-    "writeups/DDC Nationals.md",
-    "writeups/bof_emails_writeup.md",
-    "writeups/el_reverso_writeup.md",
-    "writeups/photo-album.md",
+    "writeups/DDC Nationals/bof_emails_writeup.md",
+    "writeups/DDC Nationals/el_reverso_writeup.md",
+    "writeups/DDC Nationals/photo-album.md",
     "writeups/Regionals/Baby-session-forger.markdown",
     "writeups/Regionals/Bcrypt.markdown",
     "writeups/Regionals/Find-my-files.markdown",
@@ -10,7 +9,7 @@ const files = [
     "writeups/Regionals/Stucka99.markdown",
     "writeups/Regionals/Symon-spectacle.markdown",
     "writeups/Regionals/WizardTrial.markdown",
-    "thm/pyrat_writeup.md"
+    "writeups/thm/pyrat_writeup.md"
   ];
   
   const nav = document.getElementById("fileList");
