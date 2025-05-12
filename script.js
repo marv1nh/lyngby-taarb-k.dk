@@ -7,7 +7,7 @@ const files = [
   "writeups/Regionals/Bcrypt.markdown",
   "writeups/Regionals/Find-my-files.markdown",
   "writeups/Regionals/Gateway.markdown",
-  "writeups/Regionals/Stucka99.markdown",
+  "writeups/Regionals/Stuckat99.markdown",
   "writeups/Regionals/Symon-spectacle.markdown",
   "writeups/Regionals/WizardTrial.markdown",
   "thm/pyrat_writeup.md"
