@@ -1,0 +1,34 @@
+body {
+    font-family: sans-serif;
+    max-width: 800px;
+    margin: auto;
+    padding: 1rem;
+    background: #f8f9fa;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  nav {
+    margin: 1rem 0;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  nav a {
+    text-decoration: none;
+    padding: 0.5rem;
+    background: #007bff;
+    color: white;
+    border-radius: 4px;
+  }
+  
+  main {
+    background: white;
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+  
