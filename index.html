@@ -31,18 +31,21 @@
     .sidebar {
       width: 250px;
       background: #2a2a2a;
-      padding: 1rem;
+      padding: 1.5rem; /* Increased padding for cleanliness */
       border-radius: 4px;
       margin-right: 1rem;
     }
 
     header {
-      margin-bottom: 2rem;
+      border-bottom: 1px solid #ffffff; /* White line below header */
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
     }
 
     h1 {
       font-size: 2rem;
-      color: #006400; /* Darker, muted green */
+      color: #ffffff; /* White */
+      font-weight: bold;
       text-align: center;
     }
 
@@ -60,7 +63,8 @@
     }
 
     #folderList a {
-      color: #00cccc;
+      color: #ffffff; /* White */
+      font-weight: bold; /* Bold categories */
       text-decoration: none;
       display: block;
       padding: 0.5rem 1rem;
@@ -75,7 +79,7 @@
 
     .writeup-sublist {
       list-style: none;
-      padding-left: 1rem; /* Indent writeups under categories */
+      padding-left: 1.5rem; /* Increased indentation for cleanliness */
       display: none; /* Hidden until the category is clicked */
       margin-top: 0.5rem;
     }
@@ -85,7 +89,8 @@
     }
 
     .writeup-sublist a {
-      color: #009597;
+      color: #ffffff; /* White */
+      font-weight: normal; /* Not bold */
       text-decoration: none;
       display: block;
       padding: 0.5rem 1rem;
@@ -136,6 +141,14 @@
       color: #d4d4d4;
     }
 
+    /* Footer with name label */
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #cccccc; /* Light gray */
+    }
+
     /* Responsive adjustments */
     @media (max-width: 768px) {
       .container {
@@ -159,6 +172,7 @@
       <nav>
         <ul id="folderList"></ul>
       </nav>
+      <footer>by marv1nh</footer> <!-- Added name label -->
     </div>
     <main id="content">Select a folder, then a writeup to read it</main>
   </div>
