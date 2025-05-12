@@ -1,34 +1,100 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    font-family: sans-serif;
-    max-width: 1200px;
-    margin: auto;
-    padding: 1rem;
-    background: #f8f9fa;
+  font-family: 'Courier New', Courier, monospace;
+  background: #1a1a1a;
+  color: #e0e0e0;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #00ff00;
+  text-shadow: 0 0 5px #00ff00;
+}
+
+/* Navigation grid */
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.nav-grid a {
+  display: block;
+  padding: 1rem;
+  background: #2a2a2a;
+  color: #00ff00;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 5px rgba(0, 255, 0, 0.2);
+}
+
+.nav-grid a:hover {
+  background: #3a3a3a;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+/* Main content */
+.content {
+  background: #2a2a2a;
+  padding: 2rem;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Markdown styling */
+.content h1, .content h2, .content h3 {
+  color: #00ff00;
+  margin-bottom: 1rem;
+}
+
+.content p {
+  margin-bottom: 1rem;
+}
+
+.content a {
+  color: #00ffff;
+  text-decoration: none;
+}
+
+.content a:hover {
+  text-decoration: underline;
+}
+
+/* Code blocks with Prism */
+pre[class*="language-"] {
+  background: #1e1e1e;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+code[class*="language-"] {
+  color: #d4d4d4;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .nav-grid {
+    grid-template-columns: 1fr;
   }
-  
-  h1 {
-    text-align: center;
-  }
-  
-  nav {
-    margin: 1rem 0;
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  
-  nav a {
-    text-decoration: none;
-    padding: 0.5rem;
-    background: #007bff;
-    color: white;
-    border-radius: 4px;
-  }
-  
-  main {
-    background: white;
-    padding: 1rem;
-    border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-  }
-  
+}

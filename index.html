@@ -5,12 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Writeups</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css" />
 </head>
 <body>
-  <h1> Writeups</h1>
-  <nav id="fileList"></nav>
-  <main id="content">Select a writeup to read it</main>
+  <div class="container">
+    <header>
+      <h1>🖥️ Writeups</h1>
+    </header>
+    <nav id="fileList" class="nav-grid"></nav>
+    <main id="content" class="content">Select a writeup to read it</main>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
