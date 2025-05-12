@@ -32,23 +32,26 @@
 
     h1 {
       font-size: 2.5rem;
-      color: #00cc00;
+      color: #006400; /* Darker, muted green */
     }
 
     nav {
       margin-bottom: 2rem;
     }
 
-    #folderList, #writeupList {
+    #folderList {
       list-style: none;
       padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
     }
 
-    #folderList li, #writeupList li {
+    #folderList li {
       margin-bottom: 0.5rem;
     }
 
-    #folderList a, #writeupList a {
+    #folderList a {
       color: #00cccc;
       text-decoration: none;
       display: block;
@@ -58,12 +61,33 @@
       transition: background 0.3s ease;
     }
 
-    #folderList a:hover, #writeupList a:hover {
+    #folderList a:hover {
       background: #3a3a3a;
     }
 
     #writeupList {
+      list-style: none;
+      padding-left: 2rem; /* Indent writeups under categories */
       display: none; /* Hidden until a folder is selected */
+      margin-top: 0.5rem;
+    }
+
+    #writeupList li {
+      margin-bottom: 0.5rem;
+    }
+
+    #writeupList a {
+      color: #00cccc;
+      text-decoration: none;
+      display: block;
+      padding: 0.5rem 1rem;
+      background: #2a2a2a;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+    }
+
+    #writeupList a:hover {
+      background: #3a3a3a;
     }
 
     main {
@@ -74,7 +98,7 @@
     }
 
     main h1, main h2, main h3 {
-      color: #00cc00;
+      color: #006400; /* Darker, muted green */
       margin-bottom: 1rem;
     }
 
@@ -118,7 +142,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
   <script>
     const files = [
-      { path: "writeups/DDC_Nationals/bof_emails_writeup.md", name: "Bøf Emails Writeup" },
+      { path: "writeups/DDC_Nationals/bof_emails_writeup.md", name: "BOF Emails" },
       { path: "writeups/DDC_Nationals/el_reverso_writeup.md", name: "El Reverso" },
       { path: "writeups/DDC_Nationals/photo-album.md", name: "Photo Album" },
       { path: "writeups/Regionals/Baby-session-forger.markdown", name: "Baby Session Forger" },
@@ -126,39 +150,40 @@
       { path: "writeups/Regionals/Find-my-files.markdown", name: "Find My Files" },
       { path: "writeups/Regionals/Gateway.markdown", name: "Gateway" },
       { path: "writeups/Regionals/Stuckat99.markdown", name: "Stuckat99" },
-      { path: "writeups/Regionals/Sysmon-spectacle.markdown", name: "Symon Spectacle" },
+      { path: "writeups/Regionals/Sysmon-spectacle.markdown", name: "Sysmon Spectacle" },
       { path: "writeups/Regionals/WizardTrial.markdown", name: "Wizard Trial" },
       { path: "writeups/thm/pyrat_writeup.md", name: "Pyrat" }
     ];
+
+    const folders = {
+      "DDC_Nationals": files.filter(f => f.path.startsWith("writeups/") && f.path.split("/").length === 2),
+      "Regionals": files.filter(f => f.path.startsWith("writeups/Regionals/")),
+      "thm": files.filter(f => f.path.startsWith("thm/"))
+    };
 
     const folderList = document.getElementById("folderList");
     const writeupList = document.getElementById("writeupList");
     const content = document.getElementById("content");
 
-    // Define folder structure
-    const folders = {
-      "writeups": files.filter(f => f.path.startsWith("writeups"))
-    };
-
     // Populate folder list
-    for (const folder in folders) {
+    for (const folderName in folders) {
       const li = document.createElement("li");
       const a = document.createElement("a");
       a.href = "#";
-      a.textContent = folder;
+      a.textContent = folderName;
       a.onclick = (e) => {
         e.preventDefault();
-        populateWriteups(folder);
+        populateWriteups(folderName);
       };
       li.appendChild(a);
       folderList.appendChild(li);
     }
 
     // Function to populate writeups for the selected folder
-    function populateWriteups(folder) {
+    function populateWriteups(folderName) {
       writeupList.innerHTML = "";
       writeupList.style.display = "block";
-      folders[folder].forEach(file => {
+      folders[folderName].forEach(file => {
         const li = document.createElement("li");
         const a = document.createElement("a");
         a.href = "#";
