@@ -17,11 +17,13 @@
       background: #1a1a1a;
       color: #e0e0e0;
       line-height: 1.6;
+      height: 100vh; /* Ensure body takes full viewport height */
+      overflow: hidden; /* Prevent body overflow */
     }
 
     .container {
       display: flex;
-      min-height: 100vh;
+      height: 100vh; /* Full viewport height */
       max-width: 1400px;
       margin: 0 auto;
       padding: 1rem;
@@ -29,11 +31,14 @@
 
     /* Sidebar menu on the left */
     .sidebar {
-      width: 250px;
+      width: 25%; /* Percentage-based width for scalability */
+      min-width: 250px; /* Minimum width for readability */
+      max-width: 300px; /* Cap width for larger screens */
       background: #2a2a2a;
-      padding: 1.5rem; /* Increased padding for cleanliness */
+      padding: 1.5rem;
       border-radius: 4px;
       margin-right: 1rem;
+      overflow-y: auto; /* Scroll if content overflows */
     }
 
     header {
@@ -105,15 +110,16 @@
 
     /* Main content area */
     main {
-      flex: 1;
+      flex: 1; /* Takes remaining space */
       background: #252525;
       padding: 2rem;
       border-radius: 4px;
-      min-height: 300px;
+      min-height: 100vh; /* Full viewport height */
+      overflow-y: auto; /* Scrollable content */
     }
 
     main h1, main h2, main h3 {
-      color: #eae9ff; /* Darker, muted green */
+      color: #006400; /* Darker, muted green */
       margin-bottom: 1rem;
     }
 
@@ -149,16 +155,45 @@
       color: #cccccc; /* Light gray */
     }
 
-    /* Responsive adjustments */
+    /* Responsive adjustments for phones (below 768px) */
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
+        height: auto; /* Allow natural height on phones */
       }
 
       .sidebar {
         width: 100%;
         margin-right: 0;
         margin-bottom: 1rem;
+        max-height: 50vh; /* Limit sidebar height on phones */
+        overflow-y: auto;
+      }
+
+      main {
+        min-height: auto; /* Natural height on phones */
+        height: auto;
+      }
+    }
+
+    /* Adjustments for 16:9 (e.g., 1920x1080) and 16:10 (e.g., 1920x1200) */
+    @media (min-aspect-ratio: 16/9) {
+      .sidebar {
+        width: 20%; /* Slightly narrower for wider screens */
+      }
+
+      main {
+        padding: 2.5rem; /* Increased padding for wider screens */
+      }
+    }
+
+    @media (min-aspect-ratio: 16/10) {
+      .sidebar {
+        width: 22%; /* Balanced width for 16:10 */
+      }
+
+      main {
+        padding: 2rem; /* Standard padding */
       }
     }
   </style>
