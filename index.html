@@ -4,19 +4,182 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Writeups</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css" />
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: #1a1a1a;
+      color: #e0e0e0;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #00cc00;
+    }
+
+    nav {
+      margin-bottom: 2rem;
+    }
+
+    #folderList, #writeupList {
+      list-style: none;
+      padding: 0;
+    }
+
+    #folderList li, #writeupList li {
+      margin-bottom: 0.5rem;
+    }
+
+    #folderList a, #writeupList a {
+      color: #00cccc;
+      text-decoration: none;
+      display: block;
+      padding: 0.5rem 1rem;
+      background: #2a2a2a;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+    }
+
+    #folderList a:hover, #writeupList a:hover {
+      background: #3a3a3a;
+    }
+
+    #writeupList {
+      display: none; /* Hidden until a folder is selected */
+    }
+
+    main {
+      background: #252525;
+      padding: 2rem;
+      border-radius: 4px;
+      min-height: 300px;
+    }
+
+    main h1, main h2, main h3 {
+      color: #00cc00;
+      margin-bottom: 1rem;
+    }
+
+    main p {
+      margin-bottom: 1rem;
+    }
+
+    main a {
+      color: #00cccc;
+      text-decoration: none;
+    }
+
+    main a:hover {
+      text-decoration: underline;
+    }
+
+    pre[class*="language-"] {
+      background: #1e1e1e;
+      padding: 1rem;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+
+    code[class*="language-"] {
+      color: #d4d4d4;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>🖥️ Writeups</h1>
+      <h1>Writeups</h1>
     </header>
-    <nav id="fileList" class="nav-grid"></nav>
-    <main id="content" class="content">Select a writeup to read it</main>
+    <nav>
+      <ul id="folderList"></ul>
+      <ul id="writeupList"></ul>
+    </nav>
+    <main id="content">Select a folder, then a writeup to read it</main>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
-  <script src="script.js"></script>
+  <script>
+    const files = [
+      { path: "writeups/DDC Nationals.md", name: "DDC Nationals" },
+      { path: "writeups/bof_emails_writeup.md", name: "BOF Emails" },
+      { path: "writeups/el_reverso_writeup.md", name: "El Reverso" },
+      { path: "writeups/photo-album.md", name: "Photo Album" },
+      { path: "writeups/Regionals/Baby-session-forger.markdown", name: "Baby Session Forger" },
+      { path: "writeups/Regionals/Bcrypt.markdown", name: "Bcrypt" },
+      { path: "writeups/Regionals/Find-my-files.markdown", name: "Find My Files" },
+      { path: "writeups/Regionals/Gateway.markdown", name: "Gateway" },
+      { path: "writeups/Regionals/Stuckat99.markdown", name: "Stucka99" },
+      { path: "writeups/Regionals/Symon-spectacle.markdown", name: "Symon Spectacle" },
+      { path: "writeups/Regionals/WizardTrial.markdown", name: "Wizard Trial" },
+      { path: "thm/pyrat_writeup.md", name: "Pyrat" }
+    ];
+
+    const folderList = document.getElementById("folderList");
+    const writeupList = document.getElementById("writeupList");
+    const content = document.getElementById("content");
+
+    // Define folder structure
+    const folders = {
+      "writeups": files.filter(f => f.path.startsWith("writeups") && !f.path.includes("Regionals")),
+      "writeups/Regionals": files.filter(f => f.path.startsWith("writeups/Regionals")),
+      "thm": files.filter(f => f.path.startsWith("thm"))
+    };
+
+    // Populate folder list
+    for (const folder in folders) {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = "#";
+      a.textContent = folder;
+      a.onclick = (e) => {
+        e.preventDefault();
+        populateWriteups(folder);
+      };
+      li.appendChild(a);
+      folderList.appendChild(li);
+    }
+
+    // Function to populate writeups for the selected folder
+    function populateWriteups(folder) {
+      writeupList.innerHTML = "";
+      writeupList.style.display = "block";
+      folders[folder].forEach(file => {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = "#";
+        a.textContent = file.name;
+        a.onclick = (e) => {
+          e.preventDefault();
+          fetch(file.path)
+            .then(res => res.text())
+            .then(md => {
+              content.innerHTML = marked.parse(md);
+              Prism.highlightAll();
+            })
+            .catch(err => content.innerHTML = "Error loading writeup.");
+        };
+        li.appendChild(a);
+        writeupList.appendChild(li);
+      });
+    }
+  </script>
 </body>
 </html>
