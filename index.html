@@ -20,19 +20,30 @@
     }
 
     .container {
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 0 1rem;
+      display: flex;
+      min-height: 100vh;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    /* Sidebar menu on the left */
+    .sidebar {
+      width: 250px;
+      background: #2a2a2a;
+      padding: 1rem;
+      border-radius: 4px;
+      margin-right: 1rem;
     }
 
     header {
-      text-align: center;
       margin-bottom: 2rem;
     }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: 2rem;
       color: #006400; /* Darker, muted green */
+      text-align: center;
     }
 
     nav {
@@ -42,12 +53,9 @@
     #folderList {
       list-style: none;
       padding: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
     }
 
-    #folderList li {
+    #folderList > li {
       margin-bottom: 0.5rem;
     }
 
@@ -56,41 +64,43 @@
       text-decoration: none;
       display: block;
       padding: 0.5rem 1rem;
-      background: #2a2a2a;
+      background: #3a3a3a;
       border-radius: 4px;
       transition: background 0.3s ease;
     }
 
     #folderList a:hover {
-      background: #3a3a3a;
+      background: #4a4a4a;
     }
 
-    #writeupList {
+    .writeup-sublist {
       list-style: none;
-      padding-left: 2rem; /* Indent writeups under categories */
-      display: none; /* Hidden until a folder is selected */
+      padding-left: 1rem; /* Indent writeups under categories */
+      display: none; /* Hidden until the category is clicked */
       margin-top: 0.5rem;
     }
 
-    #writeupList li {
+    .writeup-sublist li {
       margin-bottom: 0.5rem;
     }
 
-    #writeupList a {
-      color: #00cccc;
+    .writeup-sublist a {
+      color: #009597;
       text-decoration: none;
       display: block;
       padding: 0.5rem 1rem;
-      background: #2a2a2a;
+      background: #3a3a3a;
       border-radius: 4px;
       transition: background 0.3s ease;
     }
 
-    #writeupList a:hover {
-      background: #3a3a3a;
+    .writeup-sublist a:hover {
+      background: #4a4a4a;
     }
 
+    /* Main content area */
     main {
+      flex: 1;
       background: #252525;
       padding: 2rem;
       border-radius: 4px;
@@ -125,17 +135,31 @@
     code[class*="language-"] {
       color: #d4d4d4;
     }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <header>
-      <h1>Writeups</h1>
-    </header>
-    <nav>
-      <ul id="folderList"></ul>
-      <ul id="writeupList"></ul>
-    </nav>
+    <div class="sidebar">
+      <header>
+        <h1>Writeups</h1>
+      </header>
+      <nav>
+        <ul id="folderList"></ul>
+      </nav>
+    </div>
     <main id="content">Select a folder, then a writeup to read it</main>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -162,33 +186,32 @@
     };
 
     const folderList = document.getElementById("folderList");
-    const writeupList = document.getElementById("writeupList");
     const content = document.getElementById("content");
 
-    // Populate folder list
+    // Populate folder list with sublists
     for (const folderName in folders) {
+      // Create category item
       const li = document.createElement("li");
       const a = document.createElement("a");
       a.href = "#";
       a.textContent = folderName;
       a.onclick = (e) => {
         e.preventDefault();
-        populateWriteups(folderName);
+        toggleWriteups(folderName, li);
       };
       li.appendChild(a);
-      folderList.appendChild(li);
-    }
 
-    // Function to populate writeups for the selected folder
-    function populateWriteups(folderName) {
-      writeupList.innerHTML = "";
-      writeupList.style.display = "block";
+      // Create sublist for writeups
+      const sublist = document.createElement("ul");
+      sublist.className = "writeup-sublist";
+      sublist.id = `writeupList-${folderName.replace(/\s+/g, "-")}`; // Unique ID for each sublist
+
       folders[folderName].forEach(file => {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
-        a.href = "#";
-        a.textContent = file.name;
-        a.onclick = (e) => {
+        const subLi = document.createElement("li");
+        const subA = document.createElement("a");
+        subA.href = "#";
+        subA.textContent = file.name;
+        subA.onclick = (e) => {
           e.preventDefault();
           fetch(file.path)
             .then(res => res.text())
@@ -198,10 +221,27 @@
             })
             .catch(err => content.innerHTML = "Error loading writeup.");
         };
-        li.appendChild(a);
-        writeupList.appendChild(li);
+        subLi.appendChild(subA);
+        sublist.appendChild(subLi);
       });
+
+      li.appendChild(sublist);
+      folderList.appendChild(li);
+    }
+
+    // Function to toggle writeups for the selected folder
+    function toggleWriteups(folderName, li) {
+      // Hide all sublists
+      document.querySelectorAll('.writeup-sublist').forEach(sublist => {
+        sublist.style.display = "none";
+      });
+
+      // Show the sublist for the clicked category
+      const sublist = li.querySelector('.writeup-sublist');
+      if (sublist) {
+        sublist.style.display = "block";
+      }
     }
   </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93e9d0bc3f7b53aa',t:'MTc0NzA1MTg1Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
