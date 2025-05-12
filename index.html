@@ -156,9 +156,9 @@
     ];
 
     const folders = {
-      "DDC_Nationals": files.filter(f => f.path.startsWith("writeups/") && f.path.split("/").length === 2),
+      "DDC_Nationals": files.filter(f => f.path.startsWith("writeups/DDC_Nationals") && f.path.split("/").length === 2),
       "Regionals": files.filter(f => f.path.startsWith("writeups/Regionals/")),
-      "thm": files.filter(f => f.path.startsWith("thm/"))
+      "thm": files.filter(f => f.path.startsWith("writeups/thm/"))
     };
 
     const folderList = document.getElementById("folderList");
